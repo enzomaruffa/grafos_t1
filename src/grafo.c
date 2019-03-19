@@ -332,16 +332,18 @@ double coeficiente_agrupamento_grafo(grafo g)
     double triades_abertas = 0;
     double triades_totais = 0;
 
-
     struct celula_vertice *v = g->grafo->vertices;
     do
     {
         if (v->vertice->grau > 0)
-        {              
-            if (v->vertice->grau == 2) {
-                triades_totais+=1;
-            } else if (v->vertice->grau != 1) {
-                triades_totais+= (double) v->vertice->grau;
+        {
+            if (v->vertice->grau == 2)
+            {
+                triades_totais += 1;
+            }
+            else if (v->vertice->grau != 1)
+            {
+                triades_totais += (double)(v->vertice->grau * (v->vertice->grau - 1)) / 2;
             }
             printf("triades_totais: %f\n", triades_totais);
             struct celula_vertice *u = v->vertice->vertices_conectados;
