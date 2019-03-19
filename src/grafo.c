@@ -287,7 +287,7 @@ grafo le_grafo(FILE *input)
             tokens_read++;
         }
     };
-    escreve_grafo(stdout, g);
+    // escreve_grafo(stdout, g);
 
     return g;
 }
@@ -329,7 +329,6 @@ grafo escreve_grafo(FILE *output, grafo g)
 double coeficiente_agrupamento_grafo(grafo g)
 {
     double triades_fechadas = 0;
-    double triades_abertas = 0;
     double triades_totais = 0;
 
     struct celula_vertice *v = g->grafo->vertices;
@@ -337,21 +336,14 @@ double coeficiente_agrupamento_grafo(grafo g)
     {
         if (v->vertice->grau > 0)
         {
-            if (v->vertice->grau == 2)
-            {
-                triades_totais += 1;
-            }
-            else if (v->vertice->grau != 1)
-            {
-                triades_totais += (double)(v->vertice->grau * (v->vertice->grau - 1)) / 2;
-            }
-            printf("triades_totais: %f\n", triades_totais);
+            triades_totais += (double)(v->vertice->grau * (v->vertice->grau - 1)) / 2;
+            // printf("triades_totais: %f\n", triades_totais);
             struct celula_vertice *u = v->vertice->vertices_conectados;
             do
             {
                 if (u->vertice->grau > 0)
                 {
-                    printf("u: %s\n", u->vertice->nome);
+                    // printf("u: %s\n", u->vertice->nome);
                     struct celula_vertice *w = u->vertice->vertices_conectados;
                     do
                     {
@@ -361,7 +353,7 @@ double coeficiente_agrupamento_grafo(grafo g)
                             {
                                 if (u->vertice->id > w->vertice->id)
                                 {
-                                    printf("fechada+1: v: %s, u: %s, w: %s\n", v->vertice->nome, u->vertice->nome, w->vertice->nome);
+                                    // printf("fechada+1: v: %s, u: %s, w: %s\n", v->vertice->nome, u->vertice->nome, w->vertice->nome);
                                     triades_fechadas += 1;
                                 }
                             }
@@ -377,7 +369,7 @@ double coeficiente_agrupamento_grafo(grafo g)
         v = v->prox;
     } while (v != NULL);
 
-    printf("Aberta: %f; Fechada: %f \n", triades_totais - triades_fechadas, triades_fechadas);
+    // printf("Aberta: %f; Fechada: %f \n", triades_totais - triades_fechadas, triades_fechadas);
 
     return (triades_fechadas / (triades_totais));
 }
